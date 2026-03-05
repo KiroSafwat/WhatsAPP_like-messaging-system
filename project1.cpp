@@ -14,14 +14,27 @@ private:
     string phoneNumber;
     string status;
     string lastSeen;
+
+    string getCurrentTimestamp() {
+        time_t now = time(nullptr);
+        return string(ctime(&now));
+    }
     
 public:
     User() {
-        // TODO: Implement default constructor
+        username = "";
+        password = "";
+        phoneNumber = "";
+        status = "";
+        lastSeen = getCurrentTimestamp();
     }
     
     User(string uname, string pwd, string phone) {
-        // TODO: Implement parameterized constructor
+        username = uname;
+        password = pwd;
+        phoneNumber = phone;
+        status = "Online";
+        lastSeen = getCurrentTimestamp();
     }
     
     string getUsername() const {
