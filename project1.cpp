@@ -62,7 +62,7 @@ public:
     }
     
     void updateLastSeen() {
-        // TODO: Implement last seen update
+        lastSeen = getCurrentTimestamp();
     }
     
     bool checkPassword(string pwd) const {
