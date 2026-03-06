@@ -14,14 +14,27 @@ private:
     string phoneNumber;
     string status;
     string lastSeen;
+
+    string getCurrentTimestamp() {
+        time_t now = time(nullptr);
+        return string(ctime(&now));
+    }
     
 public:
     User() {
-        // TODO: Implement default constructor
+        username = "";
+        password = "";
+        phoneNumber = "";
+        status = "";
+        lastSeen = getCurrentTimestamp();
     }
     
     User(string uname, string pwd, string phone) {
-        // TODO: Implement parameterized constructor
+        username = uname;
+        password = pwd;
+        phoneNumber = phone;
+        status = "Online";
+        lastSeen = getCurrentTimestamp();
     }
     
     string getUsername() const {
@@ -143,24 +156,36 @@ protected:
     
 public:
     Chat() {
-        // TODO: Implement default constructor
+        // TODO: Implement default constructor;
+        chatName="";
+        
     }
     
     Chat(vector<string> users, string name) {
         // TODO: Implement parameterized constructor
+        for (string user : users)
+        {
+            participants.push_back(user);
+        }
+        chatName=name;
     }
     
     void addMessage(const Message& msg) {
         // TODO: Implement message addition
+        messages.push_back(msg);
     }
     
     bool deleteMessage(int index, const string& username) {
         // TODO: Implement message deletion
+        if( messages[index].getSender()==username){
+            messages[index].pop_back()
+        }
         return false;
     }
     
     virtual void displayChat() const {
         // TODO: Implement chat display
+        messages
     }
     
     vector<Message> searchMessages(string keyword) const {
