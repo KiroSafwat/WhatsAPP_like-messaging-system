@@ -38,23 +38,19 @@ public:
     }
     
     string getUsername() const {
-        // TODO: Implement getter
-        return "";
+        return username;
     }
     
     string getPhoneNumber() const {
-        // TODO: Implement getter
-        return "";
+        return phoneNumber;
     }
     
     string getStatus() const {
-        // TODO: Implement getter
-        return "";
+        return status;
     }
     
     string getLastSeen() const {
-        // TODO: Implement getter
-        return "";
+        return lastSeen;
     }
     
     void setStatus(string newStatus) {
