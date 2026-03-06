@@ -93,57 +93,99 @@ private:
 public:
     Message() {
         // TODO: Implement default constructor
+            sender = "";
+            content = "";
+            status = "sent";  
+            replyTo = nullptr;
+            updateTimestamp();  
     }
     
     Message(string sndr, string cntnt) {
         // TODO: Implement parameterized constructor
+        sender=sndr;
+        content=cntnt;
+        status="sent";
+        replyTo=nullptr;
+        updateTimestamp();
     }
     
     string getContent() const {
         // TODO: Implement getter
-        return "";
+        return content;
     }
     
     string getSender() const {
         // TODO: Implement getter
-        return "";
+        return sender;
     }
     
     string getTimestamp() const {
         // TODO: Implement getter
-        return "";
+        return timestamp;
     }
     
     string getStatus() const {
         // TODO: Implement getter
-        return "";
+        return status;
     }
     
     Message* getReplyTo() const {
         // TODO: Implement getter
-        return nullptr;
+        return replyTo;
     }
     
     void setStatus(string newStatus) {
         // TODO: Implement setter
+        status=newStatus;
+
     }
     
     void setReplyTo(Message* msg) {
         // TODO: Implement setter
+        replyTo=msg;
     }
     
     void updateTimestamp() {
         // TODO: Implement timestamp update
+        time_t currentTime = time(0); 
+        timestamp=ctime(&currentTime);
     }
     
     void display() const {
         // TODO: Implement message display
+            cout << "From: " << sender << endl;
+            cout << "Time: " << timestamp;
+            cout << "Status: " << status << endl;
+            cout << "Message: " << content << endl;
+            if (replyTo != nullptr) {
+               cout << "In reply to: " << replyTo->getContent() << endl;
+            }
     }
     
     void addEmoji(string emojiCode) {
         // TODO: Implement emoji support
+            if(emojiCode== ":)"){
+                 cout << "😊";
+            }
+            else if (emojiCode== ":("){
+                cout << "😣";
+            }
+            else if (emojiCode == ":D"){
+                cout << "😀";
+            }
+            else if (emojiCode == "<3"){
+                cout << "❤";
+            }
+            else if (emojiCode == ":thumbsup:"){
+                 cout << "👍";
+            }
+            else{
+                cout << "Emoji can't be translated";
+            }
+                
     }
-};
+
+}
 
 // ========================
 //       CHAT CLASS (BASE)
