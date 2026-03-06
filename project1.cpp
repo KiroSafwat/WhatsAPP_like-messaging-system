@@ -66,12 +66,16 @@ public:
     }
     
     bool checkPassword(string pwd) const {
-        // TODO: Implement password check
-        return false;
+        return password == pwd;
     }
     
     void changePassword(string newPwd) {
-        // TODO: Implement password change
+        if (newPwd.length() >= 6){
+            password = newPwd;
+        }
+        else {
+            cout << "Password must be at least 6 characters long. \n";
+        }
     }
 };
 
