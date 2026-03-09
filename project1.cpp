@@ -237,7 +237,7 @@ public:
         vector<Message> result={};
         for (int i = 0; i < messages.size(); i++)
         {
-            if (messages[i].getContent().find(keyword))
+            if (messages[i].getContent().find(keyword)!= string::npos)
             {
                 result.push_back(messages[i]);
             }
@@ -392,17 +392,25 @@ private:
     int currentUserIndex;
 
     int findUserIndex(string username) const {
-        // TODO: Implement user search
+        // TODO: Implement user search:done
+        for (int i =0; i < users.size(); i++){
+            if(users[i].getUsername() == username){
+                return i;
+            }
+        }
         return -1;
     }
 
     bool isLoggedIn() const {
-        // TODO: Implement login check
+        // TODO: Implement login check:done
+        return currentUserIndex != -1;
+
         return false;
     }
 
     string getCurrentUsername() const {
-        // TODO: Implement get current user
+        // TODO: Implement get current user:done
+        if (isLoggedIn()) return users[currentUserIndex].getUsername();
         return "";
     }
 
@@ -410,28 +418,108 @@ public:
     WhatsApp() : currentUserIndex(-1) {}
 
     void signUp() {
-        // TODO: Implement user registration
+        // TODO: Implement user registration:done
+        string username, password, phone;
+        cout << "Enter username: ";
+        cin >> username;
+        if (findUserIndex(username) != -1){
+            cout << "Username already exists. Please choose another one." << endl;
+            return;
+        }
+        cout << "Enter password: ";
+        cin >> password;
+        cout << "Enter phone number: ";
+        cin >> phone;
+        users.push_back(User(username, password, phone));
+        cout << "Account created successfully." << endl;
     }
 
     void login() {
-        // TODO: Implement user login
+        // TODO: Implement user login:done
+        string username, password;
+
+    cout << "Enter username: ";
+    cin >> username;
+
+    cout << "Enter password: ";
+    cin >> password;
+
+    int userIndex = findUserIndex(username);
+
+    if (userIndex == -1){
+        cout << "Username not found. Please sign up first." << endl;
+        return;
     }
 
+    if (users[userIndex].checkPassword(password)) {
+        currentUserIndex = userIndex;
+        cout << "Login successful\n";
+    }
+    else {
+        cout << "Incorrect password\n";
+    }
+}
+    
+
+    
+
     void startPrivateChat() {
-        // TODO: Implement private chat creation
+        // TODO: Implement private chat creation:done
+        string otherUsername;
+        cout << "Enter the username of the person you want to chat with: ";
+        cin >> otherUsername;
+        if(findUserIndex(otherUsername) == -1){
+            cout << "User not found." << endl;
+            return;
+        }
+        string currentUsername = getCurrentUsername();
+        Chat* chat = new PrivateChat(currentUsername, otherUsername);
+        chats.push_back(chat);
+        cout << "Private chat started with " << otherUsername << endl;
     }
 
     void createGroup() {
-        // TODO: Implement group creation
+        // TODO: Implement group creation:done
+        string groupName;
+        int n;
+        cout << "Enter group name: ";
+        cin >> groupName;
+        cout << "Enter number of participants: ";
+        cin >> n;
+        vector<string> members;
+        for (int i = 0; i < n; i++) {
+            string user;
+            cout << "Enter username of participant " << (i + 1) << ": ";
+            cin >> user;
+            if (findUserIndex(user) == -1) members.push_back(user);
+
+            else {
+                cout << "User not found.\n "; 
+            }
+        }
+        Chat* groupChat = new GroupChat(members, groupName, getCurrentUsername());
+        chats.push_back(groupChat);
+        cout << "Group '" << groupName << "' created successfully." << endl;
     }
 
     void viewChats() const {
-        // TODO: Implement chat viewing
+        // TODO: Implement chat viewing:done
+        if(chats.empty()){
+            cout << "No chats available." << endl;
+            return;
+        }
+        for (int i = 0; i < chats.size(); i++) {
+            cout <<"\nChat " << (i + 1) << ":\n ";
+            chats[i]->displayChat();
+        }
     }
 
     void logout() {
         // TODO: Implement logout
-    }
+        currentUserIndex = -1;
+        cout << "Logged out successfully.\n";
+
+     }
 
     void run() {
         while (true) {
